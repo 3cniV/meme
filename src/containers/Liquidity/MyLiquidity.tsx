@@ -20,6 +20,7 @@ import ButtonConnectWallet from "@src/components/ButtonConnectWallet";
 import RemoveLiquidity from "./RemoveLiquidity";
 import Link from "next/link";
 import AddMoreLiquidity from "./ModalAddMore";
+import TokenFetcher from "./TokenFetcher";
 
 export enum PairState {
   LOADING,
@@ -85,9 +86,19 @@ const MyLiquidity: React.FC = () => {
       maxW="1200px"
       minHeight={"100vh"}
     >
-      <Typography type="headline2" color="text.primary">
-        My Liquidity
-      </Typography>
+      <Flex
+        style={{
+          width: "100%",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+        direction={"row"}
+      >
+        <Typography type="headline2" color="text.primary">
+          My Liquidity
+        </Typography>
+        <TokenFetcher />
+      </Flex>
       <Flex
         mb={"16px"}
         direction={{
@@ -124,7 +135,6 @@ const MyLiquidity: React.FC = () => {
           />
         </Link>
       </Flex>
-
       <Flex w="100%" flexWrap={"wrap"} justifyContent={"space-around"}>
         {allV2PairsWithLiquidity && allV2PairsWithLiquidity.length > 0 ? (
           allV2PairsWithLiquidity.map((e, idx) => {
@@ -202,7 +212,6 @@ const CardLiquidity: React.FC<{ data: Pair }> = ({ data }) => {
   };
 
   const [token0Deposited, token1Deposited] = useTokensDeposited();
-
   return (
     <Flex p="1px" maxW="378px" mt="24px" w="100%" borderRadius="16px">
       <Flex
@@ -276,10 +285,7 @@ const CardLiquidity: React.FC<{ data: Pair }> = ({ data }) => {
             </Flex>
           </Flex>
           <Flex mt="24px" w="100%" justifyContent={"space-between"}>
-            <RemoveLiquidity
-              avail={userPoolBalance.toExact()}
-              data={data}
-            />
+            <RemoveLiquidity avail={userPoolBalance.toExact()} data={data} />
             <AddMoreLiquidity data={data} />
           </Flex>
         </Flex>
